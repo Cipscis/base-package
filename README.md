@@ -6,21 +6,23 @@ This is my base project to use when creating new packages.
 
 You will need to install [Node.js](https://nodejs.org/en/) before using this project, because it relies on the [npm](https://www.npmjs.com/) package manager that comes bundled with Node.js
 
-1. Click "[Use this template](https://github.com/Cipscis/base-package/generate)" to create a new repo based on this one. Make sure "Include all branches" is checked so both `main` and `gh-pages` branches are created
-2. In both the `main` branch and the `gh-pages` branch, update the `package.json` file to reflect your new project's details
-3. Create a `.env` file. See [.env](#env) for more information
-4. In the `gh-pages` branch, update the paths to assets in each HTML file to use your new project's name. See [GitHub Pages](#github-pages) for more info
+1. Click "[Use this template](https://github.com/Cipscis/base-package/generate)" to create a new repo based on this one
+2. Update the `package.json` file to reflect your new project's details
+3. Update the paths to assets in each HTML file to use your new project's name. See [GitHub Pages](#github-pages) for more info. You can do a global find/replace for `base-package` and `Base Package`
+4. Create a `.env` file. See [.env](#env) for more information
 5. Run `npm install`
 
 ## Usage
 
-In the `main` branch, you can create your package to be installed with npm. In the `gh-pages` branch, you can add your package as a dependency and document it.
+Using the files specified in `package.json`, you can create a package to be installed with npm.
 
-Once you have an initial version of your package ready to push to the `main` branch, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/) for more information on version numbers.
+In the `docs` folder, which can be deployed to GitHub pages but is not included when your package is deployed, you can document your package. Here, the package files outside the `docs` folders can be included in the bundle by using root-relative paths such as `import foo from '/main.js';`
 
-Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.0.0` in your `gh-pages` branch to install the package and use it in your documentation code.
+Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/) for more information on version numbers.
 
-In the `gh-pages` branch, this project creates three npm tasks:
+Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.0.0` to install the package in other projects.
+
+This project creates three npm tasks:
 
 * `server`
 * `watch`
@@ -36,15 +38,15 @@ The `watch` task compiles CSS files using [gulp-sass](https://www.npmjs.com/pack
 
 ### Frontend assets
 
-In the `main` branch, just a single file exists. By default, this is `main.js`, but you can change it. If you do, make sure you update the `browser` property in your `package.json` file.
+By default, your package consists of a single file. This is called `main.js`, but you can change it. If you do, make sure you update the `browser` property in your `package.json` file. Additional files can be included in your package by adding them to the [`files`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#files) array in your `package.json` file.
 
-In the `gh-pages` branch, assets such as CSS and JavaScript are contained in `./docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
+Assets such as CSS and JavaScript are contained in `./docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
 
 The `docs/assets/js` folder contains a `src` folder and a `dist` folder. The JavaScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `./docs/assets/js/src/main.js`.
 
 ### Backend assets
 
-The Node.js server run using [Express](https://expressjs.com/) has its files inside the `./server` directory of the `gh-pages` branch. By default, this just runs a static http server that serves files in the `./docs` directory, but it can be extended to add additional functionality.
+The Node.js server run using [Express](https://expressjs.com/) has its files inside the `./server` directory. By default, this just runs a static http server that serves files in the `./docs` directory, but it can be extended to add additional functionality.
 
 This server only runs locally, so any additional functionality will not be available on GitHub Pages.
 
@@ -86,9 +88,11 @@ This file is intended to differ from environment to environment, so it is ignore
 
 ## GitHub Pages
 
-When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as [https://cipscis.github.io/base-package](https://cipscis.github.io/base-package). This means using root relative URLs such as `/asssets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
+This project is set up for the contents of the `docs` directory in the `main` branch to be published to GitHub Pages.
 
-To fix this, the local Node.js server looks for a `PROJECT_NAME` variable in your [`.env`](#env) file. If it finds one, it sets up internal redirects so URLs starting with `/<projectname>` are instead treated as though they were root relative, so they will find your assets.
+When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as `https://cipscis.github.io/base-package`. This means using root relative URLs such as `/assets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
+
+To fix this, the local Node.js server looks for a `PROJECT_NAME` variable in your [`.env`](#env) file. If it finds one, it sets up redirects so URLs starting with `/<projectname>` can be used as though they were root relative, so they will find your assets.
 
 By default, the `index.html` file is configured to be published to GitHub Pages under the project name `base-package`. When you use it as a base for your own project, you will need to update these URLs.
 

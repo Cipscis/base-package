@@ -16,7 +16,7 @@ You will need to install [Node.js](https://nodejs.org/en/) before using this pro
 
 Using the files specified in `package.json`, you can create a package to be installed with npm.
 
-In the `docs` folder, which can be deployed to GitHub pages but is not included when your package is deployed, you can document your package. Here, the package files outside the `docs` folders can be included in the bundle by using root-relative paths such as `import foo from '/main.js';`
+In the `docs` folder, which can be deployed to GitHub Pages but is not included when your package is installed, you can document your package. Here, the package files outside the `docs` folders can be included in the bundle by using root-relative paths such as `import foo from '/main.js';`
 
 Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/) for more information on version numbers.
 

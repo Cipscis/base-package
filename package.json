@@ -9,8 +9,8 @@
 	],
 	"scripts": {
 		"server": "node server/server.js",
-		"watch": "gulp",
 		"build": "gulp build",
+		"watch": "gulp",
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\""
 	},
 	"author": "Mark Hanna",

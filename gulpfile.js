@@ -29,7 +29,7 @@ const watchJs = function () {
 //////////////////////
 const sass = require('gulp-sass');
 
-sass.compiler = require('dart-sass');
+sass.compiler = require('sass');
 
 const cssSrcDir = 'docs/assets/scss';
 const cssOutputDir = 'docs/assets/css';

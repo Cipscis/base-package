@@ -102,7 +102,9 @@ By default, the `index.html` file is configured to be published to GitHub Pages 
 
 [Gulp](https://gulpjs.com/): Task runner
 
-[gulp-sass](https://www.npmjs.com/package/gulp-sass): Compiling CSS from [Sass](https://sass-lang.com/)
+[sass](https://www.npmjs.com/package/sass): Compiling CSS from [Sass](https://sass-lang.com/)
+
+[gulp-sass](https://www.npmjs.com/package/gulp-sass): Using the `sass` compiler with Gulp
 
 [webpack-stream](https://www.npmjs.com/package/webpack-stream): Using [Webpack](https://webpack.js.org/) (for JavaScript dependency management) with Gulp
 

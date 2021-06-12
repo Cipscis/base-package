@@ -55,6 +55,12 @@ This server only runs locally, so any additional functionality will not be avail
 
 ## Configuration
 
+### package.json
+
+By default, the `package.json` file is configured to set the project to be of type `module`. This means NodeJS will use ES module syntax as opposed to the default CommonJS syntax, allowing the use of `import` and `export` keywords.
+
+For more information on the differences, see [Differences between ES modules and CommonJS](https://nodejs.org/api/esm.html#esm_differences_between_es_modules_and_commonjs)
+
 ### gulpfile.js
 
 This file tells [Gulp](https://gulpjs.com/) which files to watch and where to output compiled assets. Some configuration for JavaScript bundling is duplicated between here and [`webpack.config.js`](#webpackconfigjs)
@@ -101,18 +107,32 @@ By default, the `index.html` file is configured to be published to GitHub Pages 
 
 ## Dependencies
 
-[npm](https://www.npmjs.com/): Package manager
+### Development
 
-[Gulp](https://gulpjs.com/): Task runner
+These dependencies are used when working on the project locally.
 
-[sass](https://www.npmjs.com/package/sass): Compiling CSS from [Sass](https://sass-lang.com/)
+* [Node.js](https://nodejs.org/en/): Runtime environment
 
-[gulp-sass](https://www.npmjs.com/package/gulp-sass): Using the `sass` compiler with Gulp
+* [npm](https://www.npmjs.com/): Package manager
 
-[webpack-stream](https://www.npmjs.com/package/webpack-stream): Using [Webpack](https://webpack.js.org/) (for JavaScript dependency management) with Gulp
+* [Gulp](https://gulpjs.com/): Task runner
 
-[Express](https://expressjs.com/): Running a Node.js server, accessed at `http://localhost:<PORT>`
+* [sass](https://www.npmjs.com/package/sass): Compiling CSS from [Sass](https://sass-lang.com/)
 
-[Concurrently](https://www.npmjs.com/package/concurrently): Running server and development build tasks concurrently
+* [gulp-sass](https://www.npmjs.com/package/gulp-sass): Using the `sass` compiler with Gulp
 
-[dotenv](https://www.npmjs.com/package/dotenv): Reading environment variables from [`.env`](#env) file
+* [webpack-stream](https://www.npmjs.com/package/webpack-stream): Using [Webpack](https://webpack.js.org/) (for JavaScript dependency management) with Gulp
+
+* [Express](https://expressjs.com/): Running a Node.js server, accessed at `http://localhost:<PORT>`
+
+* [Concurrently](https://www.npmjs.com/package/concurrently): Running server and development build tasks concurrently
+
+* [dotenv](https://www.npmjs.com/package/dotenv): Reading environment variables from [`.env`](#env) file
+
+### Deploy
+
+These dependencies are used for deploying the project to GitHub Pages.
+
+* [checkout](https://github.com/marketplace/actions/checkout): Used to check out the repository to a workspace so it can be built
+
+* [Deploy to GitHub Pages](https://github.com/marketplace/actions/deploy-to-github-pages): Used to deploy the project to GitHub pages once it has been built

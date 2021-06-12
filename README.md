@@ -22,9 +22,10 @@ Once you have an initial version of your package ready to push, you will want to
 
 Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.0.0` to install the package in other projects.
 
-This project creates three npm tasks:
+This project creates four npm tasks:
 
 * `server`
+* `build`
 * `watch`
 * `start`
 
@@ -32,7 +33,9 @@ Usually, you will just want to run `npm start`. This will run both the `server` 
 
 The `server` task runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).
 
-The `watch` task compiles CSS files using [gulp-sass](https://www.npmjs.com/package/gulp-sass) and bundles JavaScript using [webpack-stream](https://www.npmjs.com/package/webpack-stream), then watches the relevant directories and rebuilds these files if it sees and changes.
+The `build` task compiles CSS files using [gulp-sass](https://www.npmjs.com/package/gulp-sass) and bundles JavaScript using [webpack-stream](https://www.npmjs.com/package/webpack-stream).
+
+The `watch` task first runs the `build` task, then watches the relevant directories and reruns the `build` task if it sees any changes.
 
 ## Structure
 
@@ -88,7 +91,7 @@ This file is intended to differ from environment to environment, so it is ignore
 
 ## GitHub Pages
 
-This project is set up for the contents of the `docs` directory in the `main` branch to be published to GitHub Pages.
+This project is set up to use a GitHub Action every time new code is pushed to the `main` branch. This GitHub Action runs the `build` task, then deploys the contents of the `docs` directory by committing them to a `gh-pages` branch. This `gh-pages` branch should be configured to be published to GitHub Pages.
 
 When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as `https://cipscis.github.io/base-package`. This means using root relative URLs such as `/assets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
 

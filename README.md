@@ -20,7 +20,7 @@ In the `docs` folder, which can be deployed to GitHub Pages but is not included 
 
 Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/) for more information on version numbers.
 
-Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.0.0` to install the package in other projects.
+Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.x` to install the package in other projects.
 
 This project creates four npm tasks:
 

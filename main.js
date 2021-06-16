@@ -1,5 +1,5 @@
-const foo = function (message) {
-	console.log(message);
+const foo = function () {
+	return true;
 }
 
-export default foo;
+export { foo };

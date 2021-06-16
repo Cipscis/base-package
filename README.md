@@ -1,5 +1,7 @@
 # base-package
 
+![Build and deploy status badge](https://github.com/cipscis/base-package/actions/workflows/build-and-deploy.yml/badge.svg)
+
 This is my base project to use when creating new packages.
 
 ## Install

@@ -101,6 +101,13 @@ See [Base Package documentation](https://cipscis.github.io/base-package/)
 
 ## Development
 
+You will need to install [Node.js](https://nodejs.org/en/) before working on this package.
+
+1. Clone the repository using `git clone https://github.com/cipscis/base-package.git`.
+2. Run `npm install` to install development dependencies.
+3. Create a [`.env`](#env) file.
+4. Run `npm start` to run the local server and watch CSS and JS files for changes.
+
 This project creates five npm tasks:
 
 * `npm run server` runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).

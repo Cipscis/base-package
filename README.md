@@ -1,18 +1,21 @@
-# base-package
+# Using this template
 
-![Build and deploy status badge](https://github.com/cipscis/base-package/actions/workflows/build-and-deploy.yml/badge.svg)
+This is my template repository to use when creating new packages. The top section of this readme is for how to use it to start a new package, and should be removed as part of the setup process.
 
-This is my base project to use when creating new packages.
+## Setup
 
-## Install
+You will need to install [Node.js](https://nodejs.org/en/) before using this template.
 
-You will need to install [Node.js](https://nodejs.org/en/) before using this project, because it relies on the [npm](https://www.npmjs.com/) package manager that comes bundled with Node.js
+1. Click "[Use this template](https://github.com/cipscis/base-package/generate)" to create a new repository based on this one.
+2. Update the `package.json` file to reflect your new package's details.
+3. Update the paths to assets in `index.html` to use your new package's name. See [GitHub Pages](#github-pages) for more info.
+	1. You can do a global find/replace for `base-package` and `Base Package`.
+	2. If you're not me, you'll also want to do a global find/replace for `cipscis` and replace it with your own GitHub username, and be sure to also update the `author` property in the `package.json`.
+4. Create a `.env` file. See [.env](#env-1) for more information.
+5. Run `npm install`.
+6. Update this `README.md` file and the `CHANGELOG.md` file.
 
-1. Click "[Use this template](https://github.com/Cipscis/base-package/generate)" to create a new repo based on this one
-2. Update the `package.json` file to reflect your new project's details
-3. Update the paths to assets in each HTML file to use your new project's name. See [GitHub Pages](#github-pages) for more info. You can do a global find/replace for `base-package` and `Base Package`
-4. Create a `.env` file. See [.env](#env) for more information
-5. Run `npm install`
+Now you're ready to work on code in this package.
 
 ## Usage
 
@@ -22,41 +25,25 @@ In the `docs` folder, which can be deployed to GitHub Pages but is not included 
 
 Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for more information on version numbers.
 
-Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.x` to install the package in other projects.
-
 You should also update the `CHANGELOG.md` file to describe your changes. This is particularly important after your initial 1.0.0 version.
 
-This project creates five npm tasks:
-
-* `server`
-* `build`
-* `watch`
-* `start`
-* `test`
-
-Usually, you will just want to run `npm start`. This will run both the `server` and `watch` tasks simultaneously.
-
-The `server` task runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).
-
-The `build` task compiles CSS files using [gulp-sass](https://www.npmjs.com/package/gulp-sass) and bundles JavaScript using [webpack-stream](https://www.npmjs.com/package/webpack-stream).
-
-The `watch` task first runs the `build` task, then watches the relevant directories and reruns the `build` task if it sees any changes.
-
-The `test` task runs any configured test suites using [Jasmine](https://jasmine.github.io/).
+Then, you can tag that commit with `1.0.0` and run `npm install github:cipscis/base-package#semver:1.x` to install the package in other projects.
 
 ## Structure
 
 ### Frontend assets
 
-By default, your package consists of a single file. This is called `main.js`, but you can change it. If you do, make sure you update the `browser` property in your `package.json` file. Additional files can be included in your package by adding them to the [`files`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#files) array in your `package.json` file.
+By default, your package consists of a single file. This is called `main.js`, but you can change it. If you do, make sure you update the [`browser`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#browser) property in your `package.json` file. If your package doesn't need to be run in a browser, you should change this property to [`main`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#main).
 
-Assets such as CSS and JavaScript are contained in `./docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
+Additional files can be included in your package by adding them to the [`files`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#files) array in your `package.json` file.
 
-The `docs/assets/js` folder contains a `src` folder and a `dist` folder. The JavaScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `./docs/assets/js/src/main.js`.
+Assets such as CSS and JavaScript are contained in `/docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
+
+The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. The JavaScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `/docs/assets/js/src/main.js`.
 
 ### Backend assets
 
-The Node.js server run using [Express](https://expressjs.com/) has its files inside the `./server` directory. By default, this just runs a static http server that serves files in the `./docs` directory, but it can be extended to add additional functionality.
+The Node.js server run using [Express](https://expressjs.com/) has its files inside the `/server` directory. By default, this just runs a static http server that serves files in the `/docs` directory, but it can be extended to add additional functionality.
 
 This server only runs locally, so any additional functionality will not be available on GitHub Pages.
 
@@ -78,29 +65,7 @@ This file configures [Webpack](https://webpack.js.org/), telling it which entry 
 
 ### .env
 
-The `.env` file contains the following environment variables:
-
-* `PROJECT_NAME` (`string`)
-
-If present, this is used by the local Node.js server to set up redirects for working with [GitHub Pages](#github-pages).
-
-* `MODE` (`string 'development' | 'production'`)
-
-This is used by Webpack to determine what optimisations to use and how to generate sourcemaps.
-
-* `PORT` (`int`)
-
-This is used by [Express](https://expressjs.com/) to determine which port to use when running a local Node.js server.
-
-An example `.env` file you can use for development is:
-
-```
-PROJECT_NAME = "base-package"
-MODE = "development"
-PORT = "8080"
-```
-
-This file is intended to differ from environment to environment, so it is ignored by Git.
+See [.env](#env-1) for information on setting up a `.env` file.
 
 ## Testing
 
@@ -112,11 +77,75 @@ This project is set up to use a GitHub Action every time new code is pushed to t
 
 When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as `https://cipscis.github.io/base-package`. This means using root relative URLs such as `/assets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
 
-To fix this, the local Node.js server looks for a `PROJECT_NAME` variable in your [`.env`](#env) file. If it finds one, it sets up redirects so URLs starting with `/<projectname>` can be used as though they were root relative, so they will find your assets.
+To fix this, the local Node.js server looks for a `PROJECT_NAME` variable in your [`.env`](#env-1) file. If it finds one, it sets up redirects so URLs starting with `/${PROJECT_NAME}` can be used as though they were root relative, so they will find your assets.
 
 By default, the `index.html` file is configured to be published to GitHub Pages under the project name `base-package`. When you use it as a base for your own project, you will need to update these URLs.
 
+---
+
+**Delete everything above here when creating a new package**
+
+---
+
+# base-package
+
+![Build and deploy status badge](https://github.com/cipscis/base-package/actions/workflows/build-and-deploy.yml/badge.svg)
+
+## Install
+
+Run `npm install github:cipscis/base-package#semver:1.x`
+
+## Usage
+
+See [Base Package documentation](https://cipscis.github.io/base-package/)
+
+## Development
+
+This project creates five npm tasks:
+
+* `npm run server` runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).
+
+* `npm run build` compiles CSS files using [gulp-sass](https://www.npmjs.com/package/gulp-sass) and bundles JavaScript using [webpack-stream](https://www.npmjs.com/package/webpack-stream).
+
+* `npm run watch` first runs the `build` task, then watches the relevant directories and reruns the `build` task if it sees any changes.
+
+* `npm start` runs both the `server` and `watch` tasks simultaneously.
+
+* `npm test` task runs any configured test suites using [Jasmine](https://jasmine.github.io/).
+
+Usually, you will just want to run `npm start`.
+
+### .env
+
+The `.env` file contains the following environment variables:
+
+* `PROJECT_NAME` `(string)`
+
+If present, used by [Express](https://expressjs.com/) to set up redirects for emulating [GitHub Pages](#github-pages).
+
+* `MODE` `(string 'development' | 'production')`
+
+Used by Webpack to determine what optimisations to use and how to generate sourcemaps.
+
+* `PORT` `(int)`
+
+Used by [Express](https://expressjs.com/) to determine which port to use when running a local Node.js server.
+
+An example `.env` file you can use for development is:
+
+```
+PROJECT_NAME = "base-package"
+MODE = "development"
+PORT = "8080"
+```
+
+This file is intended to differ from environment to environment, so it is ignored by Git.
+
 ## Dependencies
+
+None.
+
+## Dev Dependencies
 
 ### Development
 

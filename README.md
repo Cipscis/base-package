@@ -20,9 +20,11 @@ Using the files specified in `package.json`, you can create a package to be inst
 
 In the `docs` folder, which can be deployed to GitHub Pages but is not included when your package is installed, you can document your package. Here, the package files outside the `docs` folders can be included in the bundle by using root-relative paths such as `import foo from '/main.js';`
 
-Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/) for more information on version numbers.
+Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for more information on version numbers.
 
 Then, you can tag that commit with `1.0.0` and run `npm install github:<account-name>/<package-name>#semver:^1.x` to install the package in other projects.
+
+You should also update the `CHANGELOG.md` file to describe your changes. This is particularly important after your initial 1.0.0 version.
 
 This project creates five npm tasks:
 

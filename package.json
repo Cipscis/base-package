@@ -16,6 +16,10 @@
 		"test": "jasmine"
 	},
 	"author": "Mark Hanna",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cipscis/base-package.git"
+	},
 	"license": "Hippocratic-2.1",
 	"devDependencies": {
 		"concurrently": "^6.1.0",

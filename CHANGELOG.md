@@ -8,12 +8,12 @@ See [https://keepachangelog.com/en/](keepachangelog.com) for a good guide on how
 
 Change log entries should have a version number, a date, and subsections detailing changes of each of these types:
 
-- `Added`
-- `Changed`
-- `Deprecated`
-- `Removed`
-- `Fixed`
-- `Security`
+* `Added`
+* `Changed`
+* `Deprecated`
+* `Removed`
+* `Fixed`
+* `Security`
 
 ---
 
@@ -25,4 +25,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
-- Initial commit
+* Initial commit

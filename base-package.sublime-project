@@ -12,8 +12,8 @@
 			[
 				"node_modules",
 				"dist",
-				"assets/js/dist",
-				"assets/css"
+				"docs/assets/js/dist",
+				"docs/assets/css"
 			],
 			"path": "."
 		}

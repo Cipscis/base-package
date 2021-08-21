@@ -22,6 +22,7 @@ const clean = function () {
 
 	return Promise.all([
 		removeIfExists('dist'),
+		removeIfExists('docs/assets/js/dist'),
 		removeIfExists('docs/assets/css'),
 	]);
 };

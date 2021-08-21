@@ -15,7 +15,7 @@
 		"watch": "gulp",
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
 		"test": "tsc && jasmine",
-		"prepare": "tsc && jasmine"
+		"prepare": "gulp clean && tsc && jasmine"
 	},
 	"author": "Mark Hanna",
 	"repository": {

@@ -121,7 +121,7 @@ This project creates six npm tasks:
 
 * `npm test` task compiles and TypeScript and runs any configured test suites using [Jasmine](https://jasmine.github.io/).
 
-* `npm run prepare` compiles any TypeScript and runs any configured test suites using [Jasmine](https://jasmine.github.io/). You should never need to run this task manually, [the `prepare` script runs automatically](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts) when npm prepares your package for publishing.
+* `npm run prepare` first removes directories containing compiled files, then compiles any TypeScript and runs any configured test suites using [Jasmine](https://jasmine.github.io/). You should never need to run this task manually, [the `prepare` script runs automatically](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts) when npm prepares your package for publishing.
 
 Usually, you will just want to run `npm start`.
 

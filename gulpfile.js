@@ -100,7 +100,7 @@ const watchSass = function () {
 //////////////////
 // Export tasks //
 //////////////////
-const build = gulp.series(clean, gulp.parallel(buildSass, buildJs));
+const build = gulp.parallel(buildSass, buildJs);
 const watch = gulp.parallel(watchSass, watchJs);
 
 export {
@@ -115,4 +115,4 @@ export {
 	watchJs,
 	watchSass,
 };
-export default gulp.series(clean, buildSass, watch);
+export default gulp.series(buildSass, watch);

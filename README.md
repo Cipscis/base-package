@@ -11,7 +11,7 @@ You will need to install [Node.js](https://nodejs.org/en/) before using this tem
 	a. Replace `base-package` with the name of your package as it is used in code.
 	b. Replace `Base Package` Replace with the name of your package as it is used in documentation.
 	c. Rename `src/main-export.ts` and replace `main-export` with the name of your main entry point file.
-	d. Optionally rename `docs/assets/js/src/docs-script.js` and replace `docs-script` with the name of your documentation script and its associated Webpack entry point.
+	d. Optionally rename `docs/assets/js/src/docs-script.ts` and replace `docs-script` with the name of your documentation script and its associated Webpack entry point.
 	e. Optionally, remove `@cipscis/` from everywhere it appears if this package won't be published beneath a scope.
 	f. If you're not me, replace `@cipscis` with your npm username and then `cipscis` with your GitHub username, and be sure to also update the `author` property in the `package.json`.
 3. Create a `.env` file. See [.env](#env-1) for more information.
@@ -40,7 +40,7 @@ By default, your package consists of the contents of the `dist` folder. This fol
 
 Assets used for the package's documentation, such as CSS and JavaScript, are contained in `/docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
 
-The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `/docs/assets/js/src/docs-script.js`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
+The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `/docs/assets/js/src/docs-script.ts`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
 
 ### Backend assets
 

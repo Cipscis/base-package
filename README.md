@@ -7,16 +7,17 @@ This is my template repository to use when creating new npm packages written in 
 You will need to install [Node.js](https://nodejs.org/en/) before using this template.
 
 1. Click "[Use this template](https://github.com/cipscis/base-package/generate)" to create a new repository based on this one.
-2. Update names throughout the package.
+2. Update the `package.json` file to reflect your new package's details.
+3. Update names throughout the package.
 	a. Replace `base-package` with the name of your package as it is used in code.
 	b. Replace `Base Package` Replace with the name of your package as it is used in documentation.
 	c. Rename `src/main-export.ts` and replace `main-export` with the name of your main entry point file.
 	d. Optionally rename `docs/assets/js/src/docs-script.ts` and replace `docs-script` with the name of your documentation script and its associated Webpack entry point.
 	e. Optionally, remove `@cipscis/` from everywhere it appears if this package won't be published beneath a scope.
 	f. If you're not me, replace `@cipscis` with your npm username and then `cipscis` with your GitHub username, and be sure to also update the `author` property in the `package.json`.
-3. Create a `.env` file. See [.env](#env-1) for more information.
-4. Run `npm install`.
-5. Update this `README.md` file and the `CHANGELOG.md` file to remove the instruction sections.
+4. Create a `.env` file. See [.env](#env-1) for more information.
+5. Run `npm install`.
+6. Update this `README.md` file and the `CHANGELOG.md` file to remove the instruction sections.
 
 Now you're ready to work on code in this package.
 
@@ -62,7 +63,7 @@ This file tells [Gulp](https://gulpjs.com/) which files to watch and where to ou
 
 ### webpack.config.js
 
-This file configures [Webpack](https://webpack.js.org/), telling it which entry points to use and where to output its bundled assets.
+This file configures [Webpack](https://webpack.js.org/), telling it which entry points to use and where to output its bundled assets. Some configuration is duplicated between here and [`gulpfile.js`](#gulpfilejs)
 
 ### .env
 
@@ -81,6 +82,8 @@ This project is set up to use a GitHub Action every time new code is pushed to t
 When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as `https://cipscis.github.io/base-package`. This means using root relative URLs such as `/assets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
 
 To fix this, the local Node.js server looks for a `PROJECT_NAME` variable in your [`.env`](#env-1) file. If it finds one, it sets up redirects so URLs starting with `/${PROJECT_NAME}` can be used as though they were root relative, so they will find your assets.
+
+By default, the `index.html` file is configured to be published to GitHub Pages under the project name `base-package`. When you use it as a base for your own project, you will need to update these URLs.
 
 ---
 
@@ -109,7 +112,7 @@ You will need to install [Node.js](https://nodejs.org/en/) before working on thi
 3. Create a [`.env`](#env) file.
 4. Run `npm start` to run the local server and watch CSS and JS files for changes.
 
-This project creates six npm tasks:
+This project creates the following npm scripts:
 
 * `npm run server` runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).
 
@@ -117,11 +120,17 @@ This project creates six npm tasks:
 
 * `npm run watch` first runs the `build` task, then watches the relevant directories and reruns the `build` task if it sees any changes.
 
+* `npm run lintCss` lints all SCSS files using [stylelint](https://www.npmjs.com/package/stylelint).
+
+* `npm run lintJs` lints all JavaScript and TypeScript files using [eslint](https://www.npmjs.com/package/eslint).
+
+* `npm run lint` runs the `lintCss` and `lintJs` scripts.
+
 * `npm start` runs both the `server` and `watch` tasks simultaneously.
 
 * `npm test` lints and compiles any TypeScript, then runs any configured test suites using [Jasmine](https://jasmine.github.io/).
 
-* `npm run prepare` first removes directories containing compiled files, then lints and compiles any TypeScript, then runs any configured test suites using [Jasmine](https://jasmine.github.io/). You should never need to run this task manually, [the `prepare` script runs automatically](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts) when npm prepares your package for publishing.
+* `npm run prepare` first removes directories containing compiled files, then runs the `test` script. You should never need to run this script manually, [the `prepare` script runs automatically](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts).
 
 Usually, you will just want to run `npm start`.
 

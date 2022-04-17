@@ -32,7 +32,7 @@
 		"@types/jasmine": "^3.8.2",
 		"@typescript-eslint/eslint-plugin": "^5.18.0",
 		"@typescript-eslint/parser": "^5.18.0",
-		"concurrently": "^6.1.0",
+		"concurrently": "^6.2.1",
 		"dotenv": "^10.0.0",
 		"eslint": "^8.13.0",
 		"express": "^4.17.1",
@@ -40,12 +40,12 @@
 		"gulp-sass": "^5.0.0",
 		"jasmine": "^3.9.0",
 		"resolve-typescript-plugin": "^1.1.0",
-		"sass": "^1.34.1",
+		"sass": "^1.39.0",
 		"stylelint": "^14.7.0",
 		"stylelint-config-recommended-scss": "^6.0.0",
 		"ts-loader": "^9.2.5",
 		"typescript": "^4.5.2",
-		"webpack": "^5.40.0"
+		"webpack": "^5.52.0"
 	},
 	"engines": {
 		"node": ">=14"

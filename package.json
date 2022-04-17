@@ -13,9 +13,14 @@
 		"server": "node server/server.js",
 		"build": "gulp build",
 		"watch": "gulp",
+
+		"lintJs": "eslint src/**",
+		"lintCss": "stylelint docs/assets/scss/**/*.scss",
+		"lint": "npm run lintJs && npm run lintCss",
+
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
-		"test": "eslint src/** && tsc && jasmine",
-		"prepare": "gulp clean && eslint src/** && tsc && jasmine"
+		"test": "npm run lint && tsc && jasmine",
+		"prepare": "gulp clean && npm test"
 	},
 	"author": "Mark Hanna",
 	"repository": {
@@ -36,6 +41,8 @@
 		"jasmine": "^3.9.0",
 		"resolve-typescript-plugin": "^1.1.0",
 		"sass": "^1.34.1",
+		"stylelint": "^14.7.0",
+		"stylelint-config-recommended-scss": "^6.0.0",
 		"ts-loader": "^9.2.5",
 		"typescript": "^4.5.2",
 		"webpack": "^5.40.0"

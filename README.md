@@ -195,6 +195,10 @@ These dependencies are used when working on the project locally.
 
 	* [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Allows `eslint` to parse TypeScript
 
+* [stylelint](https://www.npmjs.com/package/stylelint): Linting CSS
+
+	* [stylelint-config-recommended-scss](https://www.npmjs.com/package/stylelint-config-recommended-scss): Allows `stylelint` to lint SCSS files, and provides a base set of SCSS linting rules
+
 ### Deploy
 
 These dependencies are used for deploying the project to GitHub Pages.

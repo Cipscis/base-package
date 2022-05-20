@@ -69,6 +69,9 @@ module.exports = {
 			},
 		],
 
+		// There are plenty of times where it's safe to use a Promise without error handling
+		'@typescript-eslint/no-floating-promises': 'off',
+
 		////////////////////////
 		// Debugging warnings //
 		////////////////////////

@@ -206,7 +206,8 @@ module.exports = {
 			'error',
 			'always',
 		],
-		'space-before-function-paren': [
+		'space-before-function-paren': 'off',
+		'@typescript-eslint/space-before-function-paren': [
 			'error',
 			{
 				anonymous: 'always',

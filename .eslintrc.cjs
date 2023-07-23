@@ -69,6 +69,10 @@ module.exports = {
 			},
 		],
 
+		// TypeScript namespaces serve a different purpose to modules, and are sometimes necessary,
+		// such as when extending the `Window` interface to add support for legacy APIs
+		'@typescript-eslint/no-namespace': 'off',
+
 		// There are plenty of times where it's safe to use a Promise without error handling
 		'@typescript-eslint/no-floating-promises': 'off',
 

@@ -26,6 +26,8 @@ module.exports = {
 	ignorePatterns: [
 		'*.md',
 		'.eslintrc.cjs',
+		'stylelint.config.cjs',
+		'jest.config.js',
 	],
 	rules: {
 		/////////////////////////

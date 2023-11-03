@@ -1,19 +1,49 @@
 {
 	"include": ["assets/js/src/**/*"],
 	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"declaration": true,
-		"sourceMap": true,
-		"outDir": "./assets/js/dist",
-		"strict": true,
-		"moduleResolution": "node",
+		// Fixes some issues with non-ESM imports
+		// https://www.typescriptlang.org/tsconfig#esModuleInterop
 		"esModuleInterop": true,
+		// Skip type-checking declaration files, to improve performance
+		// https://www.typescriptlang.org/tsconfig#skipLibCheck
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"baseUrl": "../",
+		// Always target the latest supported ECMAScript version
+		// https://www.typescriptlang.org/tsconfig#target
+		"target": "ESNext",
+		// Standardises how type and non-type imports are treated
+		// https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
+		"verbatimModuleSyntax": true,
+		// Tell TypeScript every file is a module, so it doesn't have to figure it out
+		// https://www.typescriptlang.org/tsconfig#moduleDetection
+		"moduleDetection": "force",
+
+		// Strict mode should really be a default
+		// https://www.typescriptlang.org/tsconfig#strict
+		"strict": true,
+
+		// Don't require file extensions or relative paths in imports
+		// https://www.typescriptlang.org/tsconfig#moduleResolution
+		"moduleResolution": "Bundler",
+		// Specify the base URL for using non-relative paths with module names
+		// https://www.typescriptlang.org/tsconfig#baseUrl
+		"baseUrl": "assets/scripts/src",
+		// Include support for latest ECMAScript version
+		// https://www.typescriptlang.org/tsconfig#module
+		// https://www.typescriptlang.org/docs/handbook/modules/reference.html#summary-1
+		"module": "ESNext",
+		// This code is not compiled using `tsc`
+		// https://www.typescriptlang.org/tsconfig#noEmit
+		"noEmit": true,
+
+		// Include types for the latest ECMAScript features,
+		// as well as DOM APIs so it can run in the browser
+		// https://www.typescriptlang.org/tsconfig#lib
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+
+		// Alias the package name so it can be imported in documentation
+		// https://www.typescriptlang.org/tsconfig#paths
 		"paths": {
-			"@cipscis/base-package": ["./src/main-export.js"]
-		},
+			"@cipscis/base-package": ["../../../../src/main-export.js"]
+		}
 	}
 }

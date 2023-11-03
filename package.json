@@ -16,15 +16,15 @@
 		"buildCss": "sass docs/assets/scss:docs/assets/css",
 		"build": "concurrently \"npm run buildJs\" \"npm run buildCss\"",
 
-		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=config/jest.config.js",
+		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
 
 		"watchJs": "ts-node --esm scripts/build-watch.ts",
 		"watchCss": "sass docs/assets/scss:docs/assets/css --watch",
-		"testWatch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=config/jest.config.js --watch",
+		"testWatch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
 		"watch": "concurrently --kill-others \"rimraf ./dist && tsc --watch --preserveWatchOutput --noEmit\" \"npm run watchJs\" \"npm run watchCss\" \"npm run testWatch\"",
 
-		"lintJs": "eslint --config=config/.eslintrc.cjs docs/assets/js/src/**",
-		"lintCss": "stylelint --config=config/stylelint.config.cjs docs/assets/scss/**/*.scss",
+		"lintJs": "eslint docs/assets/js/src/**",
+		"lintCss": "stylelint docs/assets/scss/**/*.scss",
 		"lint": "npm run lintJs && npm run lintCss",
 
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",

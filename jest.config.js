@@ -10,7 +10,7 @@ const config = {
 	// Don't inject globals. Require them to be imported from `@jest/globals`
 	injectGlobals: false,
 	// Specify where the tests are
-	rootDir: '../src',
+	rootDir: './src',
 	// Provide a mocked DOM environment for tests
 	testEnvironment: 'jsdom',
 	// Telling jsdom to use 'node' exports seems necessary to allow importing from Preact

@@ -25,9 +25,6 @@
 		// Strict mode should really be a default
 		// https://www.typescriptlang.org/tsconfig#strict
 		"strict": true,
-		// Increased strictness for dynamic property access
-		// https://www.typescriptlang.org/tsconfig#noUncheckedIndexedAccess
-		"noUncheckedIndexedAccess": true,
 
 		// Use Node module resolution, since this code is run using `ts-node`
 		// https://www.typescriptlang.org/tsconfig#moduleResolution

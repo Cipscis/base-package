@@ -12,7 +12,7 @@ You will need to install [Node.js](https://nodejs.org/en/) before using this tem
 	a. Replace `base-package` with the name of your package as it is used in code.
 	b. Replace `Base Package` Replace with the name of your package as it is used in documentation.
 	c. Rename `src/main-export.ts` and replace `main-export` with the name of your main entry point file.
-	d. Optionally rename `docs/assets/js/src/docs-script.ts` and replace `docs-script` with the name of your documentation script and its associated Webpack entry point.
+	d. Optionally rename `docs/assets/js/src/docs-script.ts` and replace `docs-script` with the name of your documentation script and its associated entry point.
 	e. Optionally, remove `@cipscis/` from everywhere it appears if this package won't be published beneath a scope.
 	f. If you're not me, replace `@cipscis` with your npm username and then `cipscis` with your GitHub username, and be sure to also update the `author` property in the `package.json`.
 4. Create a `.env` file. See [.env](#env-1) for more information.
@@ -53,27 +53,23 @@ This server only runs locally, so any additional functionality will not be avail
 
 ### package.json
 
-By default, the `package.json` file is configured to set the project to be of type `module`. This means NodeJS will use ES module syntax as opposed to the default CommonJS syntax, allowing the use of `import` and `export` keywords.
+By default, the `package.json` file is configured to set the project to be of type `module`. This means NodeJS will use ES module syntax as opposed to its default CommonJS syntax, allowing the use of `import` and `export` keywords.
 
 For more information on the differences, see [Differences between ES modules and CommonJS](https://nodejs.org/api/esm.html#esm_differences_between_es_modules_and_commonjs)
 
-### gulpfile.js
+### Linting
 
-This file tells [Gulp](https://gulpjs.com/) which files to watch and where to output compiled assets. Some configuration for JavaScript bundling is duplicated between here and [`webpack.config.js`](#webpackconfigjs)
+Both [eslint](https://www.npmjs.com/package/eslint) and [stylelint](https://www.npmjs.com/package/stylelint) configuration files can be found within the [`config`](./config) folder.
 
-### webpack.config.js
+### Tests
 
-This file configures [Webpack](https://webpack.js.org/), telling it which entry points to use and where to output its bundled assets. Some configuration is duplicated between here and [`gulpfile.js`](#gulpfilejs)
+The [Jest](https://jestjs.io/)-based test suite is configured in [jest.config.ts](./config/jest.config.ts). No custom test name matcher is specified, which means [Jest's default matcher](https://jestjs.io/docs/configuration#testmatch-arraystring) will be used:
+
+> By default it looks for `.js`, `.jsx`, `.ts` and `.tsx` files inside of `__tests__` folders, as well as any files with a suffix of `.test` or `.spec` (e.g. `Component.test.js` or `Component.spec.js`). It will also find files called `test.js` or `spec.js`.
 
 ### .env
 
 See [.env](#env-1) for information on setting up a `.env` file.
-
-## Testing
-
-This project comes with a small example test suite built using [Jasmine](https://jasmine.github.io/), which can be found in `/spec`. You'll want to remove this example before you commit your package's code, and replace it with your own tests.
-
-By default, the tests are run as part of the `npm prepare` script, which runs prior to publishing your package.
 
 ## GitHub Pages
 
@@ -112,27 +108,21 @@ You will need to install [Node.js](https://nodejs.org/en/) before working on thi
 3. Create a [`.env`](#env) file.
 4. Run `npm start` to run the local server and watch CSS and JS files for changes.
 
-This project creates the following npm scripts:
+Usually, you will just want to run `npm start`, but this project also provides the following npm scripts:
 
 * `npm run server` runs a Node.js server on the port specified in the [`.env`](#env) file, using [Express](https://expressjs.com/).
 
-* `npm run build` compiles CSS files using [gulp-sass](https://www.npmjs.com/package/gulp-sass), then compiles TypeScript and bundles JavaScript using [Webpack](https://webpack.js.org/).
+* `npm run build` compiles CSS files using [sass](https://www.npmjs.com/package/sass), then typechecks TypeScript using [the TypeScript compiler](https://www.typescriptlang.org/docs/handbook/compiler-options.html) and bundles TypeScript and any JavaScript using [esbuild](https://esbuild.github.io/).
 
-* `npm run watch` first runs the `build` task, then watches the relevant directories and reruns the `build` task if it sees any changes.
+* `npm run watch` compiles both CSS and TypeScript+JavaScript files just like `npm run build`, but in watch mode so any further changes will result in recompilation. Also runs any configured tests suites in watch mode.
 
-* `npm run lintCss` lints all SCSS files using [stylelint](https://www.npmjs.com/package/stylelint).
-
-* `npm run lintJs` lints all JavaScript and TypeScript files using [eslint](https://www.npmjs.com/package/eslint).
-
-* `npm run lint` runs the `lintCss` and `lintJs` scripts.
+* `npm run lint` lints all JavaScript and TypeScript files using [eslint](https://www.npmjs.com/package/eslint) and all SCSS files using [stylelint](https://www.npmjs.com/package/stylelint).
 
 * `npm start` runs both the `server` and `watch` tasks simultaneously.
 
-* `npm test` lints and compiles any TypeScript, then runs any configured test suites using [Jasmine](https://jasmine.github.io/).
+* `npm test` runs any configured test suites using [Jest](https://jestjs.io/).
 
-* `npm run prepare` first removes directories containing compiled files, then runs the `test` script. You should never need to run this script manually, [the `prepare` script runs automatically](https://docs.npmjs.com/cli/v7/using-npm/scripts#life-cycle-scripts).
-
-Usually, you will just want to run `npm start`.
+* `npm run testWatch` runs any configured test suites using [Jest](https://jestjs.io/) in watch mode.
 
 ### .env
 
@@ -172,23 +162,31 @@ These dependencies are used when working on the project locally.
 
 * [Node.js](https://nodejs.org/en/): Runtime environment
 
-* [npm](https://www.npmjs.com/): Package manager
+* [ts-node](https://typestrong.org/ts-node/): Allows TypeScript code to be run in a Node.js environment
 
-* [Gulp](https://gulpjs.com/): Task runner
+* [npm](https://www.npmjs.com/): Package manager
 
 * [TypeScript](https://www.typescriptlang.org/): JavaScript extension for static type checking
 
-* [Jasmine](https://jasmine.github.io/): Testing framework
+* [Jest](https://jestjs.io/): Testing framework
 
-	* [@types/jasmine](https://www.npmjs.com/package/@types/jasmine): TypeScript types for Jasmine
+	* [@jest/globals](https://www.npmjs.com/package/@jest/globals): Allows Jest utilities to be imported instead of polluting the global scope
+
+	* [cross-env](https://www.npmjs.com/package/cross-env): Used for setting the `--experimental-vm-modules` Node CLI flag to allow Jest to work with ESM modules
+
+	* [jest-environment-jsdom](https://www.npmjs.com/package/jest-environment-jsdom): Mocks a DOM environment to allow testing code that uses DOM APIs
+
+	* [ts-jest](https://kulshekhar.github.io/ts-jest/docs/): Allows Jest tests to be written in TypeScript
+
+	* [ts-jest-resolver](https://www.npmjs.com/package/ts-jest-resolver): Allows ESM modules imported in TypeScript tests to be resolved using TypeScript's rules, e.g. 'code.js' may fine 'code.ts'
+
+	* [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom/): Utilities for DOM tests using Jest
+
+	* [@testing-library/user-event](https://testing-library.com/docs/user-event/intro/): Utilities for simulating user interaction during tests
+
+* [esbuild](https://esbuild.github.io/): Bundling tool
 
 * [sass](https://www.npmjs.com/package/sass): Compiling CSS from [Sass](https://sass-lang.com/)
-
-	* [gulp-sass](https://www.npmjs.com/package/gulp-sass): Using the `sass` compiler with Gulp
-
-* [Webpack](https://webpack.js.org/): For JavaScript dependency management, used with Gulp
-
-	* [ts-loader](https://github.com/TypeStrong/ts-loader): For compiling TypeScript using Webpack
 
 * [Express](https://expressjs.com/): Running a Node.js server, accessed at `http://localhost:<PORT>`
 
@@ -206,10 +204,14 @@ These dependencies are used when working on the project locally.
 
 	* [stylelint-config-recommended-scss](https://www.npmjs.com/package/stylelint-config-recommended-scss): Allows `stylelint` to lint SCSS files, and provides a base set of SCSS linting rules
 
+* [rimraf](https://www.npmjs.com/package/rimraf): For deleting the contents of the `dist` folder prior to compilation
+
 ### Deploy
 
 These dependencies are used for deploying the project to GitHub Pages.
 
 * [checkout](https://github.com/marketplace/actions/checkout): Used to check out the repository to a workspace so it can be built
+
+* [setup-node](https://github.com/marketplace/actions/setup-node-js-environment): Use to set up a Node.JS environment for the build and test scripts to run on during the deployment process.
 
 * [Deploy to GitHub Pages](https://github.com/marketplace/actions/deploy-to-github-pages): Used to deploy the project to GitHub pages once it has been built

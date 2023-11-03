@@ -15,10 +15,17 @@ module.exports = {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
 		tsConfigRootDir: __dirname,
-		project: ['./tsconfig.json'],
+		project: [
+			'./tsconfig.json',
+			'./scripts/tsconfig.json',
+		],
 	},
 	plugins: [
 		'@typescript-eslint',
+	],
+	ignorePatterns: [
+		'*.md',
+		'.eslintrc.cjs',
 	],
 	rules: {
 		/////////////////////////
@@ -26,13 +33,15 @@ module.exports = {
 		/////////////////////////
 
 		// Sometimes it's useful to leave a name for an unused argument,
-		// in case it might be used in the future
+		// in case it might be used in the future. Also, using a warning
+		// level makes it clearer when there's not a "real" error while
+		// authoring new variables.
 		'@typescript-eslint/no-unused-vars': [
-			'error',
+			'warn',
 			{
 				vars: 'all',
 				args: 'none',
-				ignoreRestSiblings: false,
+				ignoreRestSiblings: true,
 			}
 		],
 
@@ -52,9 +61,6 @@ module.exports = {
 			},
 		],
 
-		// I like being able to use `'' + val` to coerce an unknown type to a string
-		'@typescript-eslint/restrict-plus-operands': 'off',
-
 		// I don't mind type coercion in string literal expressions
 		'@typescript-eslint/restrict-template-expressions': 'off',
 
@@ -69,12 +75,13 @@ module.exports = {
 			},
 		],
 
-		// TypeScript namespaces serve a different purpose to modules, and are sometimes necessary,
-		// such as when extending the `Window` interface to add support for legacy APIs
-		'@typescript-eslint/no-namespace': 'off',
-
 		// There are plenty of times where it's safe to use a Promise without error handling
 		'@typescript-eslint/no-floating-promises': 'off',
+
+		// Sometimes it can be useful to create an asynchronous function that doesn't yet do anything
+		// asynchronous, but which is planned to eventually become asynchronous, in order to provide
+		// a consistent interface
+		'@typescript-eslint/require-await': 'warn',
 
 		////////////////////////
 		// Debugging warnings //
@@ -169,17 +176,15 @@ module.exports = {
 				],
 			},
 		],
+		// My IDE handles this, it's annoying to see the squigly lines appear
 		'no-trailing-spaces': [
-			'error',
+			'off',
 		],
-		'no-undefined': 'error',
 		'no-var': 'error',
 		'one-var': [
 			'error',
 			'never',
 		],
-		// I do prefer template strings, but the 'prefer-template' rule also prohibits string coercion via `'' + val`
-		// 'prefer-template': 'error',
 		'quotes': [
 			'error',
 			'single',

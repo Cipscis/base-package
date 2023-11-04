@@ -121,7 +121,7 @@ Usually, you will just want to run `npm start`, but this project also provides t
 * `npm start` runs both the `server` and `watch` tasks simultaneously.
 
 * `npm test` runs any configured test suites using [Jest](https://jestjs.io/).
-
+* `npm run testCoverage` runs any configured test suites using [Jest](https://jestjs.io/), and reports coverage information.
 * `npm run testWatch` runs any configured test suites using [Jest](https://jestjs.io/) in watch mode.
 
 ### .env
@@ -199,6 +199,8 @@ These dependencies are used when working on the project locally.
 	* [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin): Allows `eslint` to lint TypeScript
 
 	* [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Allows `eslint` to parse TypeScript
+
+	* [@stylistic/eslint-plugin](https://eslint.style/): Provides linting rules to enforce code style
 
 * [stylelint](https://www.npmjs.com/package/stylelint): Linting CSS
 

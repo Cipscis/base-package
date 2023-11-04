@@ -5,10 +5,9 @@ module.exports = {
 		es2021: true,
 		node: false,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/recommended-requiring-type-checking',
+	plugins: [
+		'@stylistic',
+		'@typescript-eslint',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -21,8 +20,10 @@ module.exports = {
 			'./scripts/tsconfig.json',
 		],
 	},
-	plugins: [
-		'@typescript-eslint',
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 	],
 	ignorePatterns: [
 		'*.md',
@@ -105,36 +106,68 @@ module.exports = {
 			}
 		],
 
+		///////////////////////////////
+		// TypeScript-specific rules //
+		///////////////////////////////
+		'@typescript-eslint/consistent-type-assertions': [
+			'error',
+			{
+				assertionStyle: 'as',
+			},
+		],
+		'@typescript-eslint/explicit-module-boundary-types': [
+			'error'
+		],
+		
 		////////////////
 		// Code style //
 		////////////////
-		'array-bracket-spacing': [
+		'curly': [
+			'error',
+			'all',
+		],
+		'default-case-last': 'error',
+		'no-var': 'error',
+		'one-var': [
 			'error',
 			'never',
 		],
-		'arrow-parens': [
+
+		'@stylistic/array-bracket-newline': [
+			'error',
+			'consistent',
+		],
+		'@stylistic/array-bracket-spacing': [
+			'error',
+			'never',
+		],
+		'@stylistic/array-element-newline': [
+			'error',
+			'consistent',
+		],
+		'@stylistic/arrow-parens': [
 			'error',
 			'always',
 		],
-		'arrow-spacing': [
+		'@stylistic/arrow-spacing': [
 			'error',
 			{
 				before: true,
 				after: true,
 			},
 		],
-		'block-spacing': [
+		'@stylistic/block-spacing': [
 			'error',
 			'always',
 		],
-		'brace-style': [
+		'@stylistic/brace-style': [
 			'error',
 			'1tbs',
 			{
 				allowSingleLine: true,
 			},
 		],
-		'comma-dangle': [
+		'@stylistic/comma-dangle': [
 			'error',
 			{
 				arrays: 'always-multiline',
@@ -144,82 +177,121 @@ module.exports = {
 				functions: 'only-multiline',
 			},
 		],
-		'comma-spacing': [
+		'@stylistic/comma-spacing': [
 			'error',
 			{
 				before: false,
 				after: true,
 			}
 		],
-		'comma-style': [
+		'@stylistic/comma-style': [
 			'error',
 			'last',
 		],
-		'curly': [
-			'error',
-			'all',
-		],
-		'default-case-last': 'error',
-		'eol-last': [
+		'@stylistic/eol-last': [
 			'error',
 			'always',
 		],
-		'func-call-spacing': [
+		'@stylistic/func-call-spacing': [
 			'error',
 			'never',
 		],
-		'indent': [
+		'@stylistic/function-call-argument-newline': [
+			'error',
+			'consistent',
+		],
+		'@stylistic/function-paren-newline': [
+			'error',
+			'multiline-arguments',
+		],
+		'@stylistic/indent': [
 			'error',
 			'tab',
 			{
 				SwitchCase: 1,
 				ignoredNodes: [
 					// Ignore indentation within template literals to allow them to be indented like markup
-					"TemplateLiteral *",
+					'TemplateLiteral *',
+					// This rule doesn't behave correctly for TypeScript generic types
+					// https://github.com/typescript-eslint/typescript-eslint/issues/455#issuecomment-560585408
+					'TSTypeParameterInstantiation ',
 				],
 			},
 		],
-		// My IDE handles this, it's annoying to see the squigly lines appear
-		'no-trailing-spaces': [
-			'off',
-		],
-		'no-var': 'error',
-		'one-var': [
+		'@stylistic/key-spacing': [
 			'error',
-			'never',
+			{
+				'beforeColon': false,
+				'afterColon': true,
+				mode: 'minimum',
+			},
 		],
-		'quotes': [
+		'@stylistic/keyword-spacing': [
+			'error',
+			{
+				'before': true,
+				'after': true,
+			},
+		],
+		'@stylistic/multiline-ternary': [
+			'error',
+			'always-multiline',
+		],
+		'@stylistic/new-parens': [
+			'error',
+			'always',
+		],
+		'@stylistic/no-extra-semi': [
+			'error',
+		],
+		'@stylistic/no-mixed-spaces-and-tabs': [
+			'error',
+			'smart-tabs',
+		],
+		'@stylistic/no-trailing-spaces': [
+			'error',
+		],
+		'@stylistic/no-whitespace-before-property': [
+			'error',
+		],
+		'@stylistic/object-curly-newline': [
+			'error',
+			{
+				multiline: true,
+				consistent: true,
+			},
+		],
+		'@stylistic/quotes': [
 			'error',
 			'single',
 			{
 				allowTemplateLiterals: true,
 			},
 		],
-		'rest-spread-spacing': [
+		'@stylistic/rest-spread-spacing': [
 			'error',
 			'never',
 		],
-		'semi': [
+		'@stylistic/semi': [
 			'error',
 			'always',
 		],
-		'semi-spacing': [
+		'@stylistic/semi-spacing': [
 			'error',
 			{
 				before: false,
 				after: true,
 			},
 		],
-		'semi-style': [
+		'@stylistic/semi-style': [
 			'error',
 			'last',
 		],
-		'space-before-blocks': [
+		'@stylistic/space-before-blocks': [
 			'error',
 			'always',
 		],
-		'space-before-function-paren': 'off',
-		'@typescript-eslint/space-before-function-paren': [
+		'@stylistic/space-before-function-paren': [
 			'error',
 			{
 				anonymous: 'always',
@@ -227,17 +299,17 @@ module.exports = {
 				asyncArrow: 'always',
 			},
 		],
-		'space-in-parens': [
+		'@stylistic/space-in-parens': [
 			'error',
 			'never',
 		],
-		'space-unary-ops': [
+		'@stylistic/space-unary-ops': [
 			'error',
 			{
 				words: true,
 			},
 		],
-		'spaced-comment': [
+		'@stylistic/spaced-comment': [
 			'error',
 			'always',
 			{
@@ -249,16 +321,40 @@ module.exports = {
 				},
 			},
 		],
-		'no-mixed-spaces-and-tabs': [
-			'error',
-			'smart-tabs',
-		],
-
-		// TypeScript-specific rules
-		'@typescript-eslint/consistent-type-assertions': [
+		'@stylistic/switch-colon-spacing': [
 			'error',
 			{
-				assertionStyle: 'as',
+				'after': true,
+				'before': false,
+			},
+		],
+
+		// TypeScript-specific code style rules
+		'@stylistic/member-delimiter-style': [
+			'error',
+			{
+				multiline: {
+					delimiter: 'semi',
+					requireLast: true,
+				},
+				singleline: {
+					delimiter: 'semi',
+					requireLast: true,
+				},
+				multilineDetection: 'brackets',
+			},
+		],
+		'@stylistic/type-annotation-spacing': [
+			'error',
+			{
+				before: false,
+				after: true,
+				overrides: {
+					arrow: {
+						before: true,
+						after: true,
+					},
+				},
 			},
 		],
 	}

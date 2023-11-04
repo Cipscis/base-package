@@ -1,6 +1,7 @@
 node_modules/
 .env
 *.sublime-workspace
+src/coverage/
 docs/assets/css/
 docs/assets/js/dist/
 dist/

@@ -16,6 +16,7 @@ module.exports = {
 		tsConfigRootDir: __dirname,
 		project: [
 			'./tsconfig.json',
+			'./tsconfig.test.json',
 			'./docs/tsconfig.json',
 			'./scripts/tsconfig.json',
 		],
@@ -118,7 +119,7 @@ module.exports = {
 		'@typescript-eslint/explicit-module-boundary-types': [
 			'error'
 		],
-		
+
 		////////////////
 		// Code style //
 		////////////////

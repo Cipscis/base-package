@@ -31,7 +31,7 @@
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
 		"prepare": "rimraf ./dist && npm test && tsc"
 	},
-	"author": "Mark Hanna",
+	"author": "Brooke Hart",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/cipscis/base-package.git"

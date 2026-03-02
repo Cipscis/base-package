@@ -16,8 +16,8 @@
 		"build:css": "sass docs/assets/scss:docs/assets/css --style=compressed",
 		"build": "concurrently \"npm:build:*\"",
 
-		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
-		"test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --collectCoverage",
+		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=./test/jest.config.js",
+		"test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=./test/jest.config.js --collectCoverage",
 
 		"watch:js": "node --env-file-if-exists=.env scripts/build-watch.ts",
 		"watch:css": "sass docs/assets/scss:docs/assets/css --watch --style=compressed",
@@ -57,7 +57,6 @@
 		"stylelint": "^17.4.0",
 		"stylelint-config-recommended-scss": "^17.0.0",
 		"ts-jest": "^29.4.6",
-		"ts-jest-resolver": "^2.0.1",
 		"typescript": "^5.9.3"
 	},
 	"engines": {

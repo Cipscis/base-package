@@ -4,7 +4,7 @@ import {
 	test,
 } from '@jest/globals';
 
-import { foo } from './main-export.js';
+import { foo } from './main-export';
 
 describe('foo', () => {
 	test('returns true', () => {

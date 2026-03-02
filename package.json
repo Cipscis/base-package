@@ -10,23 +10,23 @@
 	],
 	"types": "dist/main-export.d.ts",
 	"scripts": {
-		"server": "node --loader ts-node/esm scripts/server.ts",
+		"server": "node --env-file-if-exists=.env scripts/server.ts",
 
-		"buildJs": "concurrently \"tsc --noEmit\" \"node --loader ts-node/esm scripts/build.ts\"",
-		"buildCss": "sass docs/assets/scss:docs/assets/css",
-		"build": "concurrently \"npm run buildJs\" \"npm run buildCss\"",
+		"build:js": "concurrently \"tsc --noEmit\" \"node --env-file-if-exists=.env scripts/build.ts\"",
+		"build:css": "sass docs/assets/scss:docs/assets/css --style=compressed",
+		"build": "concurrently \"npm:build:*\"",
 
 		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
-		"testCoverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --collectCoverage",
+		"test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --collectCoverage",
 
-		"watchJs": "node --loader ts-node/esm scripts/build-watch.ts",
-		"watchCss": "sass docs/assets/scss:docs/assets/css --watch",
-		"testWatch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
-		"watch": "concurrently --kill-others \"rimraf ./dist && tsc --watch --preserveWatchOutput --noEmit\" \"npm run watchJs\" \"npm run watchCss\" \"npm run testWatch\"",
+		"watch:js": "node --env-file-if-exists=.env scripts/build-watch.ts",
+		"watch:css": "sass docs/assets/scss:docs/assets/css --watch --style=compressed",
+		"watch:test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
+		"watch": "concurrently --kill-others \"rimraf ./dist && tsc --watch --preserveWatchOutput --noEmit\" \"npm:watch:*\"",
 
-		"lintJs": "eslint docs/assets/js/src/**",
-		"lintCss": "stylelint docs/assets/scss/**/*.scss",
-		"lint": "npm run lintJs && npm run lintCss",
+		"lint:js": "eslint docs/assets/js/src/**",
+		"lint:css": "stylelint docs/assets/scss/**/*.scss",
+		"lint": "concurrently \"npm:lint:*\"",
 
 		"start": "concurrently --kill-others \"npm run server\" \"npm run watch\"",
 		"prepare": "rimraf ./dist && npm test && tsc"
@@ -47,7 +47,6 @@
 		"@typescript-eslint/parser": "^8.56.1",
 		"concurrently": "^9.2.1",
 		"cross-env": "^10.1.0",
-		"dotenv": "^16.3.1",
 		"esbuild": "~0.27.3",
 		"eslint": "^9.39.3",
 		"express": "^5.2.1",

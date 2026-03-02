@@ -1,4 +1,4 @@
-const foo = function () {
+const foo = function (): boolean {
 	console.log('Code goes here');
 	return true;
 };

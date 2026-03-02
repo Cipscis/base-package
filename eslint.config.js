@@ -144,10 +144,35 @@ export default defineConfig([
 				},
 			],
 
+			/////////////////
+			// JSDoc rules //
+			/////////////////
+
+			// Mark types as used if they're referenced in JSDoc comments
 			'jsdoc/no-undefined-types': [
 				'warn',
 				{
 					disableReporting: true,
+				},
+			],
+
+			'jsdoc/check-param-names': 'error',
+			'jsdoc/check-property-names': 'error',
+
+			// Require JSDoc comments for exports
+			'jsdoc/require-jsdoc': [
+				'error',
+				{
+					enableFixer: false,
+					publicOnly: true,
+					require: {
+						ArrowFunctionExpression: true,
+						ClassDeclaration: true,
+						ClassExpression: true,
+						FunctionDeclaration: true,
+						FunctionExpression: true,
+						MethodDefinition: true,
+					},
 				},
 			],
 

@@ -19,7 +19,18 @@ if (projectName) {
 
 	app.use((request, response, next) => {
 		if (!ghPagesPathPattern.test(request.url)) {
-			response.sendStatus(404);
+			response.status(404);
+			response.send(`<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Error</title>
+	</head>
+	<body>
+		<pre>Cannot GET ${request.url}
+Did you mean <a href="/${projectName}${request.url}">/${projectName}${request.url}</a>?</pre>
+	</body>
+</html>`);
 			return;
 		}
 

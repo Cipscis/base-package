@@ -41,7 +41,7 @@ By default, your package consists of the contents of the `dist` folder. This fol
 
 Assets used for the package's documentation, such as CSS and JavaScript, are contained in `/docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
 
-The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `/docs/assets/js/src/docs-script.ts`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
+The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, esbuild is configured to look for a single entry point at `/docs/assets/js/src/docs-script.ts`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
 
 ### Backend assets
 
@@ -59,7 +59,7 @@ For more information on the differences, see [Differences between ES modules and
 
 ### Linting
 
-Both [eslint](https://www.npmjs.com/package/eslint) and [stylelint](https://www.npmjs.com/package/stylelint) configuration files can be found within the [`config`](./config) folder.
+[eslint](https://www.npmjs.com/package/eslint) is configured in [`.eslintrc.cjs`](./.eslintrc.cjs), and [stylelint](https://www.npmjs.com/package/stylelint) is configured in [`stylelint.config.cjs`](./stylelint.config.cjs)
 
 ### Tests
 
@@ -195,6 +195,16 @@ These dependencies are used when working on the project locally.
 	* [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Allows `eslint` to parse TypeScript
 
 	* [@stylistic/eslint-plugin](https://eslint.style/): Provides linting rules to enforce code style
+
+	* [eslint-plugin-import-newlines](https://www.npmjs.com/package/eslint-import-newlines): Provides a linting rule for named imports
+
+	* [@eslint/compat](https://www.npmjs.com/package/@eslint/compat): Use to make older eslint plugins work with the latest version
+
+	* [@eslint/eslintrc](https://www.npmjs.com/package/@eslint/eslintrc): Used to help define the eslint config
+
+	* [@eslint/js](https://www.npmjs.com/package/@eslint/js): eslint's JavaScript configuration, used as a base for eslint config
+
+	* [globals](https://www.npmjs.com/package/globals): Defines global variables for different environments, used by eslint
 
 * [stylelint](https://www.npmjs.com/package/stylelint): Linting CSS
 

@@ -1,9 +1,5 @@
 {
-	"include": [
-		"src/**/__tests__/**/*",
-		"src/**/*.test.*",
-		"src/**/*.spec.*"
-	],
+	"include": ["./**/*"],
 	"compilerOptions": {
 		// Fixes some issues with non-ESM imports
 		// https://www.typescriptlang.org/tsconfig#esModuleInterop
@@ -37,8 +33,8 @@
 		"noEmit": true,
 
 		// Include types for the latest ECMAScript features,
-		// excluding DOM APIs so it can run directly in Node
+		// but not DOM APIs
 		// https://www.typescriptlang.org/tsconfig#lib
-		"lib": ["ESNext"],
+		"lib": ["ESNext"]
 	}
 }

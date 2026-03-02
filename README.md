@@ -25,7 +25,7 @@ Now you're ready to work on code in this package.
 
 Using the files specified in `package.json`, you can create a package to be installed with npm.
 
-In the `docs` folder, which can be deployed to GitHub Pages but is not included when your package is installed, you can document your package. Webpack is configured to have an alias for your main entry point so you can load it as though it were installed from npm, e.g. `import { foo } from '@cipscis/base-package';`
+In the `docs` folder, which can be deployed to GitHub Pages but is not included when your package is installed, you can document your package. TypeScript is configured to have an alias for your main entry point so you can load it as though it were installed from npm, e.g. `import { foo } from '@cipscis/base-package';`
 
 Once you have an initial version of your package ready to push, you will want to update the `version` attribute of your `package.json` file to `"1.0.0"`. See [Semantic Versioning](https://semver.org/spec/v2.0.0.html) for more information on version numbers.
 
@@ -41,11 +41,15 @@ By default, your package consists of the contents of the `dist` folder. This fol
 
 Assets used for the package's documentation, such as CSS and JavaScript, are contained in `/docs/assets`. In here, the contents of the `scss` folder are used to compile CSS files into the `css` folder.
 
-The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, Webpack is configured to look for a single entry point at `/docs/assets/js/src/docs-script.ts`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
+The `/docs/assets/js` folder contains a `src` folder and a `dist` folder. Any JavaScript or TypeScript files inside the `src` folder are bundled into the `dist` folder. By default, esbuild is configured to look for a single entry point at `/docs/assets/js/src/docs-script.ts`, which is bundled into `/docs/assets/js/dist/docs-script.bundle.js`. You can use either JavaScript or TypeScript entry points for your documentation.
 
 ### Backend assets
 
-The Node.js server run using [Express](https://expressjs.com/) has its files inside the `/server` directory. By default, this just runs a static http server that serves files in the `/docs` directory, but it can be extended to add additional functionality.
+Node.js code sits within the `/scripts` directory. This includes the build system, which uses [esbuild](https://esbuild.github.io/), as well as the [Express](https://expressjs.com/) server code.
+
+The build system's entry points are defined within [`build-config.ts`](./scripts/build-config.ts).
+
+By default, the server code just runs a static http server that serves files in the `/docs` directory, but it can be extended to add additional functionality.
 
 This server only runs locally, so any additional functionality will not be available on GitHub Pages.
 
@@ -59,13 +63,15 @@ For more information on the differences, see [Differences between ES modules and
 
 ### Linting
 
-Both [eslint](https://www.npmjs.com/package/eslint) and [stylelint](https://www.npmjs.com/package/stylelint) configuration files can be found within the [`config`](./config) folder.
+[eslint](https://www.npmjs.com/package/eslint) is configured in [`.eslintrc.cjs`](./.eslintrc.cjs), and [stylelint](https://www.npmjs.com/package/stylelint) is configured in [`stylelint.config.cjs`](./stylelint.config.cjs)
 
 ### Tests
 
-The [Jest](https://jestjs.io/)-based test suite is configured in [jest.config.ts](./config/jest.config.ts). No custom test name matcher is specified, which means [Jest's default matcher](https://jestjs.io/docs/configuration#testmatch-arraystring) will be used:
+The [Jest](https://jestjs.io/)-based test suite is configured in [jest.config.js](./test/jest.config.js). No custom test name matcher is specified, which means [Jest's default matcher](https://jestjs.io/docs/configuration#testmatch-arraystring) will be used:
 
 > By default it looks for `.js`, `.jsx`, `.ts` and `.tsx` files inside of `__tests__` folders, as well as any files with a suffix of `.test` or `.spec` (e.g. `Component.test.js` or `Component.spec.js`). It will also find files called `test.js` or `spec.js`.
+
+If any extra setup needs to be done before tests are run, such as polyfilling functionality not supported by `jsdom`, code for this can be placed in [jest.setup.ts](./test/jest.setup.ts').
 
 ### .env
 
@@ -73,7 +79,7 @@ See [.env](#env-1) for information on setting up a `.env` file.
 
 ## GitHub Pages
 
-This project is set up to use a GitHub Action every time new code is pushed to the `main` branch. This `build-and-deploy` workflow runs the `build` npm script, then runs the test script, then if the tests passed it deploys the contents of the `docs` directory by committing them to a `gh-pages` branch. This `gh-pages` branch should be configured in GitHub to be published to GitHub Pages.
+This project is set up to use a GitHub Action every time new code is pushed to the `main` branch. This `build-and-deploy` workflow runs the `build` npm script, then runs the test script, then if the tests passed it deploys the contents of the `docs` directory directly to GitHub Pages.
 
 When publishing a project using [GitHub Pages](https://pages.github.com/), the project usually appears at a URL with a path, such as `https://cipscis.github.io/base-package`. This means using root relative URLs such as `/assets/css/main.css` would work locally, but would break when the project is published on GitHub Pages.
 
@@ -121,22 +127,22 @@ Usually, you will just want to run `npm start`, but this project also provides t
 * `npm start` runs both the `server` and `watch` tasks simultaneously.
 
 * `npm test` runs any configured test suites using [Jest](https://jestjs.io/).
-* `npm run testCoverage` runs any configured test suites using [Jest](https://jestjs.io/), and reports coverage information.
-* `npm run testWatch` runs any configured test suites using [Jest](https://jestjs.io/) in watch mode.
+* `npm run test:coverage` runs any configured test suites using [Jest](https://jestjs.io/), and reports coverage information.
+* `npm run watch:test` runs any configured test suites using [Jest](https://jestjs.io/) in watch mode.
 
 ### .env
 
 The `.env` file contains the following environment variables:
 
-* `PROJECT_NAME` `(string)`
+* `PROJECT_NAME?: string`
 
 If present, used by [Express](https://expressjs.com/) to set up redirects for emulating [GitHub Pages](#github-pages).
 
-* `MODE` `(string 'development' | 'production')`
+* `MODE: 'development' | 'production'`
 
-Used by Webpack to determine what optimisations to use and how to generate sourcemaps.
+Used to determine what optimisations to use when running the build process.
 
-* `PORT` `(int)`
+* `PORT: number`
 
 Used by [Express](https://expressjs.com/) to determine which port to use when running a local Node.js server.
 
@@ -162,8 +168,6 @@ These dependencies are used when working on the project locally.
 
 * [Node.js](https://nodejs.org/en/): Runtime environment
 
-* [ts-node](https://typestrong.org/ts-node/): Allows TypeScript code to be run in a Node.js environment
-
 * [npm](https://www.npmjs.com/): Package manager
 
 * [TypeScript](https://www.typescriptlang.org/): JavaScript extension for static type checking
@@ -178,8 +182,6 @@ These dependencies are used when working on the project locally.
 
 	* [ts-jest](https://kulshekhar.github.io/ts-jest/docs/): Allows Jest tests to be written in TypeScript
 
-	* [ts-jest-resolver](https://www.npmjs.com/package/ts-jest-resolver): Allows ESM modules imported in TypeScript tests to be resolved using TypeScript's rules, e.g. 'code.js' may fine 'code.ts'
-
 	* [@testing-library/jest-dom](https://testing-library.com/docs/ecosystem-jest-dom/): Utilities for DOM tests using Jest
 
 	* [@testing-library/user-event](https://testing-library.com/docs/user-event/intro/): Utilities for simulating user interaction during tests
@@ -192,8 +194,6 @@ These dependencies are used when working on the project locally.
 
 * [Concurrently](https://www.npmjs.com/package/concurrently): Running server and development build tasks concurrently
 
-* [dotenv](https://www.npmjs.com/package/dotenv): Reading environment variables from [`.env`](#env) file
-
 * [eslint](https://www.npmjs.com/package/eslint): Linting TypeScript files
 
 	* [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin): Allows `eslint` to lint TypeScript
@@ -201,6 +201,16 @@ These dependencies are used when working on the project locally.
 	* [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser): Allows `eslint` to parse TypeScript
 
 	* [@stylistic/eslint-plugin](https://eslint.style/): Provides linting rules to enforce code style
+
+	* [eslint-plugin-import-newlines](https://www.npmjs.com/package/eslint-import-newlines): Provides a linting rule for named imports
+
+	* [@eslint/compat](https://www.npmjs.com/package/@eslint/compat): Use to make older eslint plugins work with the latest version
+
+	* [@eslint/eslintrc](https://www.npmjs.com/package/@eslint/eslintrc): Used to help define the eslint config
+
+	* [@eslint/js](https://www.npmjs.com/package/@eslint/js): eslint's JavaScript configuration, used as a base for eslint config
+
+	* [globals](https://www.npmjs.com/package/globals): Defines global variables for different environments, used by eslint
 
 * [stylelint](https://www.npmjs.com/package/stylelint): Linting CSS
 
@@ -212,8 +222,14 @@ These dependencies are used when working on the project locally.
 
 These dependencies are used for deploying the project to GitHub Pages.
 
-* [checkout](https://github.com/marketplace/actions/checkout): Used to check out the repository to a workspace so it can be built
+* [checkout](https://github.com/marketplace/actions/checkout): Used to check out the repository to a workspace so it can be built.
 
 * [setup-node](https://github.com/marketplace/actions/setup-node-js-environment): Use to set up a Node.JS environment for the build and test scripts to run on during the deployment process.
 
-* [Deploy to GitHub Pages](https://github.com/marketplace/actions/deploy-to-github-pages): Used to deploy the project to GitHub pages once it has been built
+* [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact): Used to upload a build artifact to be reused across multiple CI/CD jobs.
+
+* [download-artifact](https://github.com/marketplace/actions/download-artifact): Used to download a build artifact.
+
+* [upload-pages-artifact](https://github.com/marketplace/actions/upload-github-pages-artifact): Used to upload an artifact to use for deploying to GitHub Pages.
+
+* [deploy-pages](https://github.com/marketplace/actions/deploy-github-pages-site): Used to deploy the artifact to GitHub Pages.
